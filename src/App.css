@@ -1,34 +1,8 @@
-*,
+/* *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
+} */
 .wrapper {
-  height: 100vh;
   text-align: center;
-}
-
-.icon {
-  margin-left: 10px;
-}
-
-.edit {
-  display: inline-flex;
-}
-
-input {
-  font-size: inherit;
-}
-
-.header {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh;
-  width: 100vw;
-}
-
-.taskList {
-  height: 90vh;
 }

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 
-import Editable from "./Editable";
+import Editable from "./helpers/Editable";
 
-const Task = (id, colNo, content) => {
+import Card from "@material-ui/core/Card";
+
+const Task = (props) => {
   // State hook to change {text}
-  const [task, setTask] = useState(content);
+  const [task, setTask] = useState(props.task);
 
-  // Delete task when there content is empty
+  // Delete task when {content} is empty
 
   return (
-    <div>
+    <Card>
       <Editable text={task} type="text" editFunc={setTask} />
-    </div>
+    </Card>
   );
 };
 

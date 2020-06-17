@@ -1,0 +1,14 @@
+.edit {
+  display: inline-flex;
+}
+
+input {
+  font-size: inherit;
+  /* max-width: 100px; */
+}
+
+span:hover {
+  border-radius: 8px;
+  background-color: #D3D3D3;
+  padding: 0 10px;
+}

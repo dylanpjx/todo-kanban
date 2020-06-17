@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import EditIcon from "@material-ui/icons/EditOutlined";
+import "./Editable.css";
 
 const Editable = ({ text, type, editFunc, props }) => {
   // State hook to show span or input
@@ -24,7 +24,9 @@ const Editable = ({ text, type, editFunc, props }) => {
               editFunc(e.target.value);
             }}
             onBlur={() => setEditing(false)}
-            onClick={(e) => e.target.select()}
+            onMouseEnter={(e) => {
+              e.target.select();
+            }}
           ></input>
         </div>
       ) : (
