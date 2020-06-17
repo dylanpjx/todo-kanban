@@ -8,4 +8,7 @@ The main goal of this project is to create a component based single page React a
 
 ## Advanced features planned:
 
+- User authentication
 - Use MongoDB to permanently store notes per user
+- Multiple board per user with different formats (Paint-like canvas and Kanban)
+- Ability to share/collab boards with other users (with real-time updates)
