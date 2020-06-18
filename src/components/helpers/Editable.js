@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 
+import TextField from "@material-ui/core/TextField";
+
 import "./Editable.css";
 
-const Editable = ({ text, type, editFunc, props }) => {
+const Editable = ({ text, type, onEdit }) => {
   // State hook to show span or input
   const [isEditing, setEditing] = useState(false);
-
-  // Exit editing on "Enter"
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setEditing(false);
-    }
-  };
 
   return (
     <div className="edit">
       {isEditing ? (
-        <div onKeyDown={(e) => handleKeyDown(e)}>
-          <input
-            value={text}
-            type={type}
+        <div>
+          <TextField
+            defaultValue={text}
+            variant="outlined"
             onChange={(e) => {
-              editFunc(e.target.value);
+              onEdit(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setEditing(false);
+              }
             }}
             onBlur={() => setEditing(false)}
             onMouseEnter={(e) => {
               e.target.select();
             }}
-          ></input>
+          ></TextField>
         </div>
       ) : (
-        <span onClick={() => setEditing(true)}>
-          {text || "Oops, this cannot be blank"}
+        <span className="editSpan" onClick={() => setEditing(true)}>
+          {text || onEdit("Cannot be null")}
         </span>
       )}
     </div>
