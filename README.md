@@ -1,4 +1,4 @@
-# todo-kanban
+# todo-kanban (WIP)
 
 ## Personal implementation of a todo kanban board.
 
