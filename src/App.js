@@ -40,14 +40,17 @@ class App extends Component {
   }
 
   // Board handling
-  setBoards = (boards) => {};
+  setBoards = (boards) => {
+    this.setState({ boards});
+  };
 
   // Col handling
-  setCols = (cols) => {};
+  setCols = (boardNo, cols) => {
+  };
 
   // Task handling
-  setTasks = (tasks) => {
-    this.setState({});
+  setTasks = (boardNo, colNo, tasks) => {
+
   };
 
   // addTask = (newTask) => setTasks((prev) => [...prev, createTask(newTask)]);
