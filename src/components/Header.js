@@ -10,9 +10,11 @@ import Editable from "./helpers/Editable";
 
 const useStyles = makeStyles((theme) => ({
   header: {
+    display: "flex",
     height: "10vh",
     alignItems: "center",
     justifyContent: "center",
+    maxWidth: 300,
   },
 }));
 
@@ -24,7 +26,7 @@ const Header = (props) => {
 
   return (
     <header className={classes.header}>
-      <Editable text={header} type="text" onEdit={setHeader} />
+      <Editable text={header} comp="header" onEdit={setHeader} />
       <IconButton
         onClick={(e) => setMenu(e.currentTarget)}
         className={classes.menu}
