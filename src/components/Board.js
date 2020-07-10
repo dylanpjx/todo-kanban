@@ -1,16 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import Header from "./Header";
-import Col from "./Col";
+import AddCol from './helpers/AddCol';
+import Header from './Header';
+import Col from './Col';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexWrap: "no-wrap",
+    flexWrap: 'no-wrap',
     padding: `0px ${theme.spacing(2)}px`,
   },
 }));
@@ -19,27 +18,29 @@ const Board = (props) => {
   const classes = useStyles();
 
   return (
-      <div>
+    <div>
       <Grid container spacing={3} className={classes.root}>
         <Grid container item xs={12} alignItems="center" justify="center">
           <Header header={props.header} />
         </Grid>
 
         {props.cols.map((col) => (
-          <Grid item md={3} lg={2}>
-              <Col id={col.id} label={col.label} tasks={col.tasks} />
+          <Grid item md={3} lg={2} key={col.id}>
+            <Col
+              id={col.id}
+              label={col.label}
+              tasks={col.tasks}
+              isNew={col.isNew}
+              delCol={props.delCol}
+              addTask={props.addTask}
+              delTask={props.delTask}
+              updateTask={props.updateTask}
+            />
           </Grid>
         ))}
 
         <Grid item md={3} lg={2}>
-          <Button
-            fullWidth
-            variant="contained"
-            startIcon={<AddIcon />}
-            style={{ paddingTop: 10, paddingBottom: 10 }}
-          >
-            Add another column
-          </Button>
+          <AddCol addCol={props.addCol} />
         </Grid>
       </Grid>
     </div>

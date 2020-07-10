@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import Editable from "./helpers/Editable";
+import Editable from './helpers/Editable';
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    display: "flex",
-    height: "10vh",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    height: '10vh',
+    alignItems: 'center',
+    justifyContent: 'center',
     maxWidth: 300,
   },
 }));
@@ -26,7 +26,7 @@ const Header = (props) => {
 
   return (
     <header className={classes.header}>
-      <Editable text={header} comp="header" onEdit={setHeader} />
+      <Editable text={header} type="header" onEdit={setHeader} />
       <IconButton
         onClick={(e) => setMenu(e.currentTarget)}
         className={classes.menu}
