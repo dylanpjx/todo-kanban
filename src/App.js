@@ -56,7 +56,7 @@ class App extends Component {
     this.setBoards(newBoards);
   };
 
-  updateCol = (colId, label) => {
+  updateLabel = (colId, label) => {
     const boardId = this.state.currBoard;
     const cols = this.state.boards[boardId].cols;
     this.setCols(
@@ -90,7 +90,7 @@ class App extends Component {
     this.setBoards(newBoards);
   };
 
-  updateTask = (colId, taskId, content) => {
+  updateContent = (colId, taskId, content) => {
     const boardId = this.state.currBoard;
     const tasks = this.state.boards[boardId].cols[colId].tasks;
     this.setTasks(
@@ -130,10 +130,10 @@ class App extends Component {
         cols={board.cols}
         addCol={this.addCol}
         delCol={this.delCol}
-        updateCol={this.updateCol}
+        updateLabel={this.updateLabel}
         addTask={this.addTask}
         delTask={this.delTask}
-        updateTask={this.updateTask}
+        updateContent={this.updateContent}
       />
     );
   }

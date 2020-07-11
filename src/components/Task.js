@@ -30,7 +30,7 @@ const Task = (props) => {
       <Editable
         text={props.content}
         type="task"
-        onEdit={props.updateTask}
+        onEdit={props.updateContent}
         initialIsEditing={props.isNew}
         colId={props.colId}
         taskId={props.taskId}

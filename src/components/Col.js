@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const Col = (props) => {
   const classes = useStyles();
 
-  const [label, setLabel] = useState(props.label);
   const [menu, setMenu] = useState(null);
 
   console.log(`Col ${props.id}: props.task:`, props.tasks);
@@ -46,7 +45,7 @@ const Col = (props) => {
         <Editable
           text={props.label}
           type="col"
-          onEdit={props.updateCol}
+          onEdit={props.updateLabel}
           initialIsEditing={props.isNew}
           colId={props.id}
         />
@@ -83,7 +82,7 @@ const Col = (props) => {
               content={task.content}
               isNew={task.isNew}
               delTask={props.delTask}
-              updateTask={props.updateTask}
+              updateContent={props.updateContent}
             />
           </div>
         ))}

@@ -21,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
 
-  const [header, setHeader] = useState(props.header);
   const [menu, setMenu] = useState(null);
 
   return (
     <header className={classes.header}>
-      <Editable text={header} type="header" onEdit={setHeader} />
+      <Editable text={props.header} type="header" onEdit={props.updateHeader} />
       <IconButton
         onClick={(e) => setMenu(e.currentTarget)}
         className={classes.menu}

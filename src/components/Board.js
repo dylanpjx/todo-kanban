@@ -21,7 +21,7 @@ const Board = (props) => {
     <div>
       <Grid container spacing={3} className={classes.root}>
         <Grid container item xs={12} alignItems="center" justify="center">
-          <Header header={props.header} />
+          <Header header={props.header} updateHeader={props.updateHeader} />
         </Grid>
 
         {props.cols.map((col) => (
@@ -29,12 +29,13 @@ const Board = (props) => {
             <Col
               id={col.id}
               label={col.label}
+              updateLabel={props.updateLabel}
               tasks={col.tasks}
               isNew={col.isNew}
               delCol={props.delCol}
               addTask={props.addTask}
               delTask={props.delTask}
-              updateTask={props.updateTask}
+              updateContent={props.updateContent}
             />
           </Grid>
         ))}
