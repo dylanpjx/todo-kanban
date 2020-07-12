@@ -27,7 +27,7 @@ const Board = (props) => {
         {props.cols.map((col) => (
           <Grid item md={3} lg={2} key={col.id}>
             <Col
-              id={col.id}
+              colId={col.id}
               label={col.label}
               updateLabel={props.updateLabel}
               tasks={col.tasks}

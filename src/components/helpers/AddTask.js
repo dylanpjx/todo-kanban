@@ -8,7 +8,7 @@ const AddTask = (props) => {
     <Button
       size="small"
       startIcon={<AddIcon />}
-      onClick={() => props.addTask(props.colId, '')}
+      onClick={() => props.addTask(props.colId, 'Type your task here!')}
     >
       Add another task
     </Button>

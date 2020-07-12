@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   editWrapper: {
@@ -20,35 +19,37 @@ const useStyles = makeStyles((theme) => ({
 
 const Editable = ({
   text,
-  type,
-  onEdit,
+  onSubmit,
+  ContentComponent,
+  multiline = false,
   initialIsEditing = false,
-  colId = null,
-  taskId = null,
 }) => {
   const classes = useStyles();
+
   const [isEditing, setEditing] = useState(initialIsEditing);
 
   return (
-    <div className={classes.editWrapper}>
+    <div
+      onClick={() => {
+        if (!isEditing) setEditing(true);
+      }}
+      className={classes.editWrapper}
+      style={{ whiteSpace: 'pre-line' }}
+    >
       {isEditing ? (
         <TextField
           fullWidth
-          multiline
+          multiline={multiline}
           defaultValue={text}
           variant="outlined"
-          onChange={(e) => {
-            if (type === 'header') {
-              onEdit(e.target.value);
-            } else if (type === 'col') {
-              onEdit(colId, e.target.value);
-            } else if (type === 'task') {
-              onEdit(colId, taskId, e.target.value);
-            }
-          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              setEditing(false);
+              if (e.shiftKey) return;
+              e.preventDefault(); // prevent default activity (which is to input <CR>)
+              if (e.target.value.trim() !== '') {
+                onSubmit(e.target.value.trim());
+                setEditing(false);
+              }
             }
           }}
           onBlur={() => setEditing(false)}
@@ -64,14 +65,7 @@ const Editable = ({
           }}
         />
       ) : (
-        <Typography
-          variant={type === 'col' || type === 'header' ? 'h6' : 'body1'}
-          style={{ padding: 2 }}
-          onClick={() => setEditing(true)}
-        >
-          {text || onEdit('Cannot be null')}
-        </Typography>
-        // Change padding here based on type
+        <ContentComponent />
       )}
     </div>
   );

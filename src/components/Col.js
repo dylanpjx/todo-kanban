@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -31,12 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ContentComponent = ({ text }) => <Typography> {text} </Typography>;
+
 const Col = (props) => {
   const classes = useStyles();
 
   const [menu, setMenu] = useState(null);
 
-  console.log(`Col ${props.id}: props.task:`, props.tasks);
+  // console.log(`Col ${props.id}: props.task:`, props.tasks);
 
   return (
     <Card className={classes.col}>
@@ -44,10 +47,9 @@ const Col = (props) => {
       <div className={classes.labelWrapper}>
         <Editable
           text={props.label}
-          type="col"
-          onEdit={props.updateLabel}
+          onSubmit={(text) => props.updateLabel(props.colId, text)}
           initialIsEditing={props.isNew}
-          colId={props.id}
+          ContentComponent={() => <ContentComponent text={props.label} />}
         />
 
         {/* Context menu */}
@@ -65,7 +67,7 @@ const Col = (props) => {
           onClose={() => setMenu(null)}
         >
           <MenuItem onClick={() => setMenu(null)}>Copy Column</MenuItem>
-          <MenuItem onClick={() => props.delCol(props.id)}>
+          <MenuItem onClick={() => props.delCol(props.colId)}>
             Delete Column
           </MenuItem>
           <MenuItem onClick={() => setMenu(null)}>Move Column</MenuItem>
@@ -77,8 +79,8 @@ const Col = (props) => {
         {props.tasks.map((task) => (
           <div key={task.id}>
             <Task
-              id={task.id}
               colId={task.colId}
+              taskId={task.id}
               content={task.content}
               isNew={task.isNew}
               delTask={props.delTask}
@@ -92,7 +94,7 @@ const Col = (props) => {
       <CardActions>
         <AddTask
           className={classes.add}
-          colId={props.id}
+          colId={props.colId}
           addTask={props.addTask}
         />
       </CardActions>
