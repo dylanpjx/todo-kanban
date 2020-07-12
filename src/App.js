@@ -1,64 +1,54 @@
 import React, { Component } from 'react';
 
+import initialState from './components/helpers/initialState';
 import Board from './components/Board';
-
-var _todoIndex = 0;
-var _colIndex = 0;
-var _boardIndex = 0;
-
-const createBoard = (header, cols, id = _boardIndex++) => {
-  return { id, header, cols };
-};
-
-const createCol = (label, tasks, isNew = false, id = _colIndex++) => {
-  return { id, label, tasks, isNew };
-};
-
-const createTask = (colId, content, isNew = false, id = _todoIndex++) => {
-  return { id, colId, content, isNew };
-};
-
-const _initialState = {
-  currBoard: 0,
-  boards: [
-    createBoard('Project Name', [
-      createCol('Todo', [createTask(0, 'Click inside to edit.')]),
-      createCol('Doing', [
-        createTask(1, 'Try adding a task by clicking the button below.'),
-      ]),
-      createCol('Done', []),
-    ]),
-  ],
-};
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = _initialState;
+    this.state = initialState;
   }
   // Board handling
   setBoards = (boards) => {
+    console.log('new', boards);
     this.setState({ boards });
   };
 
   updateHeader = (header) => {
     const boardId = this.state.currBoard;
-    const newBoards = [...this.state.boards];
-    newBoards[boardId].header = header;
-    this.setBoards(newBoards);
+    const boards = [...this.state.boards];
+
+    this.setBoards(
+      boards.map((board) => {
+        if (board.id === boardId) {
+          return { ...board, header };
+        }
+        return { board };
+      }),
+    );
   };
 
   // Col handling
   setCols = (cols) => {
     const boardId = this.state.currBoard;
-    const newBoards = [...this.state.boards];
-    newBoards[boardId] = { ...newBoards[boardId], cols };
-    this.setBoards(newBoards);
+    const boards = [...this.state.boards];
+
+    this.setBoards(
+      boards.map((board) => {
+        if (board.id === boardId) {
+          return { ...board, cols };
+        }
+        return { board };
+      }),
+    );
   };
 
   updateLabel = (colId, label) => {
     const boardId = this.state.currBoard;
-    const cols = this.state.boards[boardId].cols;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const cols = board.cols;
+
     this.setCols(
       cols.map((col) => {
         if (col.id === colId) {
@@ -71,28 +61,48 @@ class App extends Component {
 
   addCol = (label) => {
     const boardId = this.state.currBoard;
-    const cols = this.state.boards[boardId].cols;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const cols = board.cols;
+
     const newCol = createCol(label, [], true);
     this.setCols([...cols, newCol], boardId);
   };
 
   delCol = (colId) => {
     const boardId = this.state.currBoard;
-    const cols = this.state.boards[boardId].cols;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const cols = board.cols;
+
     this.setCols(cols.filter(({ id }) => id !== colId));
   };
 
   // Task handling
   setTasks = (colId, tasks) => {
     const boardId = this.state.currBoard;
-    const newBoards = [...this.state.boards];
-    newBoards[boardId].cols[colId].tasks = tasks;
-    this.setBoards(newBoards);
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const cols = board.cols;
+
+    this.setCols(
+      cols.map((col) => {
+        if (col.id === colId) {
+          return { ...col, tasks };
+        }
+        return col;
+      }),
+    );
   };
 
+  // this should be called only if you commit the edit
   updateContent = (colId, taskId, content) => {
     const boardId = this.state.currBoard;
-    const tasks = this.state.boards[boardId].cols[colId].tasks;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const col = board.cols.find((col) => col.id === colId);
+    const tasks = col.tasks;
+
     this.setTasks(
       colId,
       tasks.map((task) => {
@@ -106,14 +116,24 @@ class App extends Component {
 
   addTask = (colId, content) => {
     const boardId = this.state.currBoard;
-    const tasks = this.state.boards[boardId].cols[colId].tasks;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const col = board.cols.find((col) => col.id === colId);
+    const tasks = col.tasks;
+
     const newTask = createTask(colId, content, true);
     this.setTasks(colId, [...tasks, newTask]);
   };
 
   delTask = (colId, taskId) => {
     const boardId = this.state.currBoard;
-    const tasks = this.state.boards[boardId].cols[colId].tasks;
+    const boards = [...this.state.boards];
+    const board = boards.find((board) => board.id === boardId);
+    const col = board.cols.find((col) => col.id === colId);
+    const tasks = col.tasks;
+
+    console.log('old', boards);
+
     this.setTasks(
       colId,
       tasks.filter(({ id }) => id !== taskId),
@@ -121,7 +141,9 @@ class App extends Component {
   };
 
   render() {
-    const board = this.state.boards[this.state.currBoard];
+    const board = this.state.boards.find(
+      (board) => board.id === this.state.currBoard,
+    );
 
     return (
       <Board
