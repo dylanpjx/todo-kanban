@@ -1,161 +1,182 @@
 import React, { Component } from 'react';
 
-import initialState from './components/helpers/initialState';
+import initialState from './helpers/initialState';
 import Board from './components/Board';
+
+var _taskIndex = 3;
+var _colIndex = 3;
+var _boardIndex = 1;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
   }
+
+  // DnD
+  onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
+
+    // No destination
+    if (!destination) return;
+
+    // Destination same as source
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+
+    // Handle column dragging
+    if (type === 'column') {
+      const colIds = this.state.boards[source.droppableId].colIds;
+      colIds.splice(source.index, 1);
+      colIds.splice(destination.index, 0, draggableId);
+      const newBoard = { ...this.state.boards[source.draggableId], colIds };
+
+      this.setState({
+        ...this.state,
+        boards: { ...this.state.boards, [newBoard.id]: newBoard },
+      });
+      return;
+    }
+
+    // Handle task dragging
+    const startCol = this.state.cols[source.droppableId];
+    const endCol = this.state.cols[destination.droppableId];
+
+    // Within same column
+    if (startCol === endCol) {
+      const taskIds = startCol.taskIds;
+      taskIds.splice(source.index, 1);
+      taskIds.splice(destination.index, 0, draggableId);
+      const newCol = { ...startCol, taskIds };
+
+      this.setState({
+        ...this.state,
+        cols: { ...this.state.cols, [newCol.id]: newCol },
+      });
+      return;
+    }
+    // Across different columns
+    const startTaskIds = startCol.taskIds;
+    startTaskIds.splice(source.index, 1);
+    const newStart = { ...startCol, startTaskIds };
+
+    const endTaskIds = endCol.taskIds;
+    endTaskIds.splice(destination.index, 0, draggableId);
+    const newEnd = { ...endCol, endTaskIds };
+
+    this.setState({
+      ...this.state,
+      cols: {
+        ...this.state.cols,
+        [newStart.id]: newStart,
+        [newEnd.id]: newEnd,
+      },
+    });
+  };
+
   // Board handling
-  setBoards = (boards) => {
-    console.log('new', boards);
+  addBoard = (header, colIds = [], id = 'board-' + _boardIndex++) => {
+    const boards = { ...this.state.boards };
+    boards[id] = { id, header, colIds };
     this.setState({ boards });
   };
 
-  updateHeader = (header) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
+  delBoard = (id) => {
+    const boards = { ...this.state.boards };
+    boards.filter((board) => board.id === id);
+    this.setState({ boards });
+  };
 
-    this.setBoards(
-      boards.map((board) => {
-        if (board.id === boardId) {
-          return { ...board, header };
-        }
-        return { board };
-      }),
-    );
+  updateHeader = (id, header) => {
+    const boards = { ...this.state.boards };
+    boards.map((board) => {
+      if (board.id === id) return { ...board, header };
+      return board;
+    });
+    this.setState({ boards });
   };
 
   // Col handling
-  setCols = (cols) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
+  addCol = (label, taskIds = [], id = 'col-' + _colIndex++) => {
+    const cols = { ...this.state.cols };
+    cols[id] = { id, label, taskIds };
+    this.setState({ cols });
 
-    this.setBoards(
-      boards.map((board) => {
-        if (board.id === boardId) {
-          return { ...board, cols };
-        }
-        return { board };
-      }),
-    );
+    const boards = { ...this.state.boards };
+    boards[this.state.boardOrder[0]].colIds.push(id);
+    this.setState({ boards });
   };
 
-  updateLabel = (colId, label) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const cols = board.cols;
+  delCol = (id) => {
+    const cols = { ...this.state.cols };
+    delete cols[id];
+    this.setState({ cols });
 
-    this.setCols(
-      cols.map((col) => {
-        if (col.id === colId) {
-          return { ...col, label };
-        }
-        return col;
-      }),
-    );
+    const boards = { ...this.state.boards };
+    boards[this.state.boardOrder[0]].colIds.filter((colId) => colId === id);
   };
 
-  addCol = (label) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const cols = board.cols;
-
-    const newCol = createCol(label, [], true);
-    this.setCols([...cols, newCol], boardId);
-  };
-
-  delCol = (colId) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const cols = board.cols;
-
-    this.setCols(cols.filter(({ id }) => id !== colId));
+  updateLabel = (id, label) => {
+    const cols = { ...this.state.cols };
+    cols.map((col) => {
+      if (col.id === id) return { ...col, label };
+      return col;
+    });
+    this.setState({ cols });
   };
 
   // Task handling
-  setTasks = (colId, tasks) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const cols = board.cols;
+  addTask = (colId, content, id = 'task-' + _taskIndex++) => {
+    const tasks = { ...this.state.tasks };
+    tasks[id] = { id, content };
+    this.setState({ tasks });
 
-    this.setCols(
-      cols.map((col) => {
-        if (col.id === colId) {
-          return { ...col, tasks };
-        }
-        return col;
-      }),
-    );
+    const cols = { ...this.state.cols };
+    cols[colId].taskIds.push(id);
+    this.setState({ cols });
   };
 
-  // this should be called only if you commit the edit
-  updateContent = (colId, taskId, content) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const col = board.cols.find((col) => col.id === colId);
-    const tasks = col.tasks;
+  delTask = (colId, id) => {
+    const tasks = { ...this.state.tasks };
+    delete tasks[id];
+    this.setState({ tasks });
 
-    this.setTasks(
-      colId,
-      tasks.map((task) => {
-        if (task.id === taskId) {
-          return { ...task, content };
-        }
-        return task;
-      }),
-    );
+    const cols = { ...this.state.cols };
+    cols[colId].taskIds.filter((taskId) => taskId === id);
+    this.setState({ cols });
   };
 
-  addTask = (colId, content) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const col = board.cols.find((col) => col.id === colId);
-    const tasks = col.tasks;
-
-    const newTask = createTask(colId, content, true);
-    this.setTasks(colId, [...tasks, newTask]);
-  };
-
-  delTask = (colId, taskId) => {
-    const boardId = this.state.currBoard;
-    const boards = [...this.state.boards];
-    const board = boards.find((board) => board.id === boardId);
-    const col = board.cols.find((col) => col.id === colId);
-    const tasks = col.tasks;
-
-    console.log('old', boards);
-
-    this.setTasks(
-      colId,
-      tasks.filter(({ id }) => id !== taskId),
-    );
+  updateContent = (id, content) => {
+    const tasks = { ...this.state.tasks };
+    tasks.map((task) => {
+      if (task.id === id) return { ...task, content };
+      return task;
+    });
+    this.setState({ tasks });
   };
 
   render() {
-    const board = this.state.boards.find(
-      (board) => board.id === this.state.currBoard,
-    );
+    const board = this.state.boards[this.state.boardOrder[0]];
+    console.log('board: ', board);
 
     return (
       <Board
-        header={board.header}
-        updateHeader={this.updateHeader}
-        cols={board.cols}
+        board={board}
+        // addBoard={this.addBoard}
+        // delBoard={this.delBoard}
+
+        cols={this.state.cols}
         addCol={this.addCol}
         delCol={this.delCol}
         updateLabel={this.updateLabel}
+        tasks={this.state.tasks}
         addTask={this.addTask}
         delTask={this.delTask}
         updateContent={this.updateContent}
+        onDragEnd={this.onDragEnd}
       />
     );
   }

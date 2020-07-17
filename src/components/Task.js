@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Editable from './helpers/Editable';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+
+import Editable from '../helpers/Editable';
+import DelTask from '../helpers/DelTask';
 
 const useStyles = makeStyles((theme) => ({
   taskWrapper: {
@@ -29,23 +30,35 @@ const Task = (props) => {
   const classes = useStyles();
 
   return (
-    <Paper variant="outlined" square className={classes.taskWrapper}>
-      <Editable
-        text={props.content}
-        onSubmit={(text) =>
-          props.updateContent(props.colId, props.taskId, text)
-        } // called when you commit the edit
-        ContentComponent={() => <ContentComponent text={props.content} />}
-        multiline
-        initialIsEditing={props.isNew}
-      />
-      <IconButton
-        className={classes.button}
-        onClick={() => props.delTask(props.colId, props.taskId)}
-      >
-        <DeleteIcon />
-      </IconButton>
-    </Paper>
+    <Draggable draggableId={props.task.id} index={props.index} type="task">
+      {(provided, snapshot) => (
+        <Paper
+          variant="outlined"
+          square
+          className={classes.taskWrapper}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
+        >
+          <Editable
+            text={props.task.content}
+            // onSubmit={(text) => {}}
+            ContentComponent={() => (
+              <ContentComponent text={props.task.content} />
+            )}
+            multiline
+            // initialIsEditing={props.isNew}
+          />
+
+          <DelTask
+            delTask={props.delTask}
+            colId={props.colId}
+            taskId={props.task.id}
+          />
+        </Paper>
+      )}
+    </Draggable>
   );
 };
 

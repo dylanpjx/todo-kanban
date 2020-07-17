@@ -11,7 +11,7 @@ const AddCol = (props) => {
         variant="contained"
         startIcon={<AddIcon />}
         style={{ paddingTop: 10, paddingBottom: 10 }}
-        onClick={() => props.addCol('')}
+        onClick={() => props.addCol('Type your new column label here')}
       >
         Add another column
       </Button>

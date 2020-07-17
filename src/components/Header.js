@@ -7,11 +7,13 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import Editable from './helpers/Editable';
+import Editable from '../helpers/Editable';
 
 const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
     height: '10vh',
     alignItems: 'center',
     justifyContent: 'center',
