@@ -14,7 +14,10 @@ import Task from './Task';
 import AddTask from '../helpers/AddTask';
 
 const useStyles = makeStyles((theme) => ({
-  col: {},
+  col: {
+    width: '272px',
+    margin: '10px',
+  },
   add: {
     padding: theme.spacing(2, 1),
     borderRadius: theme.spacing(2),
@@ -25,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     position: 'relative',
   },
+  taskWrapper: {},
 }));
 
 const ContentComponent = ({ text }) => <Typography> {text} </Typography>;
@@ -63,6 +67,7 @@ const Col = (props) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 isDraggingOver={snapshot.isDraggingOver}
+                className={classes.taskWrapper}
               >
                 {props.col.taskIds.map((taskId, index) => {
                   const task = props.tasks[taskId];

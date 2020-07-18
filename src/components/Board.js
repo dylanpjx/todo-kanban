@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -13,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexWrap: 'no-wrap',
     padding: `0px ${theme.spacing(2)}px`,
+  },
+  colWrapper: {
+    display: 'flex',
   },
 }));
 
@@ -29,36 +31,32 @@ const Board = (props) => {
         type="column"
       >
         {(provided) => (
-          <Grid
-            container
-            spacing={3}
+          <div
+            className={classes.colWrapper}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
             {props.board.colIds.map((colId, index) => {
+              console.log('index:', index);
               const col = props.cols[colId];
               if (col) {
                 return (
-                  <Grid item xs={3}>
-                    <Col
-                      key={col.id}
-                      col={col}
-                      delCol={props.delCol}
-                      index={index}
-                      tasks={props.tasks}
-                      addTask={props.addTask}
-                      delTask={props.delTask}
-                    />
-                  </Grid>
+                  <Col
+                    key={col.id}
+                    col={col}
+                    delCol={props.delCol}
+                    index={index}
+                    tasks={props.tasks}
+                    addTask={props.addTask}
+                    delTask={props.delTask}
+                  />
                 );
               }
             })}
             {provided.placeholder}
 
-            <Grid item xs={3}>
-              <AddCol addCol={props.addCol} />
-            </Grid>
-          </Grid>
+            <AddCol addCol={props.addCol} />
+          </div>
         )}
       </Droppable>
     </DragDropContext>

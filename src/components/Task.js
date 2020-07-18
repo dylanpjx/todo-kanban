@@ -10,7 +10,7 @@ import Editable from '../helpers/Editable';
 import DelTask from '../helpers/DelTask';
 
 const useStyles = makeStyles((theme) => ({
-  taskWrapper: {
+  task: {
     padding: theme.spacing(2),
     position: 'relative',
     display: 'flex',
@@ -35,7 +35,7 @@ const Task = (props) => {
         <Paper
           variant="outlined"
           square
-          className={classes.taskWrapper}
+          className={classes.task}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
