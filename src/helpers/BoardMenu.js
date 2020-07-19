@@ -7,16 +7,19 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
-  // colMenu: { float: 'right', padding: '0px' },
+  // boardMenu: { padding: '0px' },
 }));
 
-const ColMenu = (props) => {
+const BoardMenu = (props) => {
   const classes = useStyles();
   const [menu, setMenu] = useState(null);
 
   return (
-    <div className={classes.colMenu}>
-      <IconButton onClick={(e) => setMenu(e.currentTarget)}>
+    <div>
+      <IconButton
+        className={classes.boardMenu}
+        onClick={(e) => setMenu(e.currentTarget)}
+      >
         <MoreHorizIcon />
       </IconButton>
       <Menu
@@ -26,14 +29,12 @@ const ColMenu = (props) => {
         open={Boolean(menu)}
         onClose={() => setMenu(null)}
       >
-        <MenuItem onClick={() => setMenu(null)}>Copy Column</MenuItem>
-        <MenuItem onClick={() => props.delCol(props.colId)}>
-          Delete Column
-        </MenuItem>
-        <MenuItem onClick={() => setMenu(null)}>Move Column</MenuItem>
+        <MenuItem onClick={() => setMenu(null)}>Delete Board</MenuItem>
+        <MenuItem onClick={() => setMenu(null)}></MenuItem>
+        <MenuItem onClick={() => setMenu(null)}></MenuItem>
       </Menu>
     </div>
   );
 };
 
-export default ColMenu;
+export default BoardMenu;

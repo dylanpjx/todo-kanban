@@ -10,11 +10,12 @@ import Col from './Col';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
     flexWrap: 'no-wrap',
-    padding: `0px ${theme.spacing(2)}px`,
   },
   colWrapper: {
     display: 'flex',
+    margin: '20px',
   },
 }));
 
@@ -23,7 +24,11 @@ const Board = (props) => {
 
   return (
     <DragDropContext onDragEnd={props.onDragEnd} className={classes.root}>
-      <Header header={props.board.header} updateHeader={props.updateHeader} />
+      <Header
+        boardId={props.board.id}
+        header={props.board.header}
+        updateHeader={props.updateHeader}
+      />
 
       <Droppable
         droppableId={props.board.id}
@@ -45,10 +50,12 @@ const Board = (props) => {
                     key={col.id}
                     col={col}
                     delCol={props.delCol}
+                    updateLabel={props.updateLabel}
                     index={index}
                     tasks={props.tasks}
                     addTask={props.addTask}
                     delTask={props.delTask}
+                    updateContent={props.updateContent}
                   />
                 );
               }

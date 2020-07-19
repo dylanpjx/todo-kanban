@@ -5,9 +5,9 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   editWrapper: {
-    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
     minHeight: 30,
-    padding: 0,
     paddingRight: 20,
   },
   inputStyle: {

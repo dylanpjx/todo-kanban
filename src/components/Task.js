@@ -11,16 +11,11 @@ import DelTask from '../helpers/DelTask';
 
 const useStyles = makeStyles((theme) => ({
   task: {
-    padding: theme.spacing(2),
+    padding: '10px',
     position: 'relative',
     display: 'flex',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  button: {
-    position: 'absolute',
-    right: 0,
-    // float: "right",
+    width: '220px',
   },
 }));
 
@@ -43,7 +38,7 @@ const Task = (props) => {
         >
           <Editable
             text={props.task.content}
-            // onSubmit={(text) => {}}
+            onSubmit={(text) => props.updateContent(props.task.id, text)}
             ContentComponent={() => (
               <ContentComponent text={props.task.content} />
             )}

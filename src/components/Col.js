@@ -15,20 +15,24 @@ import AddTask from '../helpers/AddTask';
 
 const useStyles = makeStyles((theme) => ({
   col: {
-    width: '272px',
-    margin: '10px',
-  },
-  add: {
-    padding: theme.spacing(2, 1),
-    borderRadius: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: '50px',
+    width: '270px',
+    margin: '0px 15px',
   },
   labelWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
   },
-  taskWrapper: {},
+  taskWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
 }));
 
 const ContentComponent = ({ text }) => <Typography> {text} </Typography>;
@@ -45,12 +49,13 @@ const Col = (props) => {
           className={classes.col}
           {...provided.draggableProps}
           ref={provided.innerRef}
+          {...provided.dragHandleProps}
         >
           {/* Label + Menu */}
-          <div className={classes.labelWrapper} {...provided.dragHandleProps}>
+          <div className={classes.labelWrapper}>
             <Editable
               text={props.label}
-              // onSubmit={(text) => }
+              onSubmit={(text) => props.updateLabel(props.col.id, text)}
               // initialIsEditing={props.isNew}
               ContentComponent={() => (
                 <ContentComponent text={props.col.label} />
@@ -79,6 +84,7 @@ const Col = (props) => {
                         task={task}
                         index={index}
                         delTask={props.delTask}
+                        updateContent={props.updateContent}
                       />
                     );
                   }
