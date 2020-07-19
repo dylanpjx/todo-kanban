@@ -92,10 +92,7 @@ class App extends Component {
 
   updateHeader = (id, header) => {
     const boards = { ...this.state.boards };
-    boards.map((board) => {
-      if (board.id === id) return { ...board, header };
-      return board;
-    });
+    boards[id] = { ...boards[id], header };
     this.setState({ boards });
   };
 
@@ -121,10 +118,7 @@ class App extends Component {
 
   updateLabel = (id, label) => {
     const cols = { ...this.state.cols };
-    cols.map((col) => {
-      if (col.id === id) return { ...col, label };
-      return col;
-    });
+    cols[id] = { ...cols[id], label };
     this.setState({ cols });
   };
 
@@ -151,10 +145,7 @@ class App extends Component {
 
   updateContent = (id, content) => {
     const tasks = { ...this.state.tasks };
-    tasks.map((task) => {
-      if (task.id === id) return { ...task, content };
-      return task;
-    });
+    tasks[id] = { ...tasks[id], content };
     this.setState({ tasks });
   };
 
@@ -165,6 +156,7 @@ class App extends Component {
     return (
       <Board
         board={board}
+        updateHeader={this.updateHeader}
         // addBoard={this.addBoard}
         // delBoard={this.delBoard}
 
