@@ -10,17 +10,20 @@ const initialState = {
     'col-0': {
       id: 'col-0',
       label: 'Todo',
+      isNew: false,
       taskIds: ['task-0'],
     },
     'col-1': {
       id: 'col-1',
       label: 'Doing',
+      isNew: false,
       taskIds: ['task-1'],
     },
 
     'col-2': {
       id: 'col-2',
       label: 'Done',
+      isNew: false,
       taskIds: ['task-2'],
     },
   },
@@ -28,14 +31,17 @@ const initialState = {
     'task-0': {
       id: 'task-0',
       content: 'Click inside any of the text fields to edit',
+      isNew: false,
     },
     'task-1': {
       id: 'task-1',
       content: 'Try dragging the tasks and cols around to reorder them',
+      isNew: false,
     },
     'task-2': {
       id: 'task-2',
       content: 'The notes support markdown syntax',
+      isNew: false,
     },
   },
 

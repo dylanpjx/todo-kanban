@@ -15,94 +15,112 @@ import AddTask from '../helpers/AddTask';
 
 const useStyles = makeStyles((theme) => ({
   col: {
+    backgroundColor: 'rgb(243.6, 241.2, 232.2)',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: '50px',
-    width: '270px',
+    minWidth: '270px',
     margin: '0px 15px',
   },
   labelWrapper: {
     display: 'flex',
+    height: '44px',
     alignItems: 'center',
     justifyContent: 'center',
+    '&:hover': {
+      backgroundColor: 'rgb(236, 232, 217)',
+    },
   },
   taskWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
   },
 }));
 
-const ContentComponent = ({ text }) => <Typography> {text} </Typography>;
+const ContentComponent = ({ text }) => (
+  <Typography style={{ padding: '12px' }} variant="h6">
+    {text}
+  </Typography>
+);
 
 const Col = (props) => {
   const classes = useStyles();
 
-  // console.log(`Col ${props.id}: props.task:`, props.tasks);
-
   return (
     <Draggable draggableId={props.col.id} index={props.index} type="column">
       {(provided) => (
-        <Card
-          className={classes.col}
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-        >
-          {/* Label + Menu */}
-          <div className={classes.labelWrapper}>
-            <Editable
-              text={props.label}
-              onSubmit={(text) => props.updateLabel(props.col.id, text)}
-              // initialIsEditing={props.isNew}
-              ContentComponent={() => (
-                <ContentComponent text={props.col.label} />
+        <div>
+          <Card
+            className={classes.col}
+            {...provided.draggableProps}
+            ref={provided.innerRef}
+          >
+            {/* Label + Menu */}
+            <div className={classes.labelWrapper} {...provided.dragHandleProps}>
+              <Editable
+                text={props.col.label}
+                onSubmit={(text) => props.updateLabel(props.col.id, text)}
+                onExitIfEmpty={() => {
+                  if (props.col.isNew) props.delCol(props.col.id);
+                }}
+                initIsEditing={props.col.isNew}
+                // inputStyle={classes.inputStyle}
+                ContentComponent={() => (
+                  <ContentComponent text={props.col.label} />
+                )}
+                styleProps={{
+                  padding: '10px',
+                  fontSize: '1.25rem',
+                  fontWeight: '500',
+                  lineHeight: '1.6',
+                }}
+              />
+
+              <ColMenu
+                colId={props.col.id}
+                delCol={props.delCol}
+                copyCol={props.copyCol}
+              />
+            </div>
+
+            {/* Tasks */}
+            <Droppable droppableId={props.col.id} type="task">
+              {(provided) => (
+                <CardContent
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className={classes.taskWrapper}
+                >
+                  {props.col.taskIds.map((taskId, index) => {
+                    const task = props.tasks[taskId];
+                    if (task) {
+                      return (
+                        <Task
+                          key={task.id}
+                          colId={props.col.id}
+                          task={task}
+                          index={index}
+                          delTask={props.delTask}
+                          updateContent={props.updateContent}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                  {provided.placeholder}
+                </CardContent>
               )}
-            />
+            </Droppable>
 
-            <ColMenu colId={props.col.id} delCol={props.delCol} />
-          </div>
-
-          {/* Tasks */}
-          <Droppable droppableId={props.col.id} type="task">
-            {(provided, snapshot) => (
-              <CardContent
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                isDraggingOver={snapshot.isDraggingOver}
-                className={classes.taskWrapper}
-              >
-                {props.col.taskIds.map((taskId, index) => {
-                  const task = props.tasks[taskId];
-                  if (task) {
-                    return (
-                      <Task
-                        key={task.id}
-                        colId={props.col.id}
-                        task={task}
-                        index={index}
-                        delTask={props.delTask}
-                        updateContent={props.updateContent}
-                      />
-                    );
-                  }
-                })}
-                {provided.placeholder}
-              </CardContent>
-            )}
-          </Droppable>
-
-          {/* AddTask Button */}
-          <CardActions>
-            <AddTask
-              className={classes.add}
-              colId={props.col.id}
-              addTask={props.addTask}
-            />
-          </CardActions>
-        </Card>
+            {/* AddTask Button */}
+            <CardActions>
+              <AddTask
+                className={classes.add}
+                colId={props.col.id}
+                addTask={props.addTask}
+              />
+            </CardActions>
+          </Card>
+        </div>
       )}
     </Draggable>
   );

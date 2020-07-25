@@ -29,9 +29,12 @@ const BoardMenu = (props) => {
         open={Boolean(menu)}
         onClose={() => setMenu(null)}
       >
-        <MenuItem onClick={() => setMenu(null)}>Delete Board</MenuItem>
-        <MenuItem onClick={() => setMenu(null)}></MenuItem>
-        <MenuItem onClick={() => setMenu(null)}></MenuItem>
+        <MenuItem
+          disabled={Object.keys(props.boards).length <= 1}
+          onClick={() => setMenu(null)}
+        >
+          Delete Board
+        </MenuItem>
       </Menu>
     </div>
   );

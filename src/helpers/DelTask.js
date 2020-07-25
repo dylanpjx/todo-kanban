@@ -7,10 +7,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   delTask: {
-    border: '',
-    padding: '',
     position: 'absolute',
-    right: '0',
+    right: '0px',
+    '&:hover': {
+      backgroundColor: 'rgba(236, 232, 217, 0.6)',
+    },
   },
 }));
 
@@ -20,7 +21,11 @@ const DelTask = (props) => {
   return (
     <div>
       <IconButton
+        size="small"
         className={classes.delTask}
+        style={{
+          borderRadius: '0px',
+        }}
         onClick={() => props.delTask(props.colId, props.taskId)}
       >
         <DeleteIcon />

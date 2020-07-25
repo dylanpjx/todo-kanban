@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -11,18 +11,27 @@ import DelTask from '../helpers/DelTask';
 
 const useStyles = makeStyles((theme) => ({
   task: {
-    padding: '10px',
-    position: 'relative',
+    backgroundColor: 'rgb(255, 253, 246)',
     display: 'flex',
-    alignItems: 'center',
-    width: '220px',
+    justifyContent: 'space-between',
+    // padding: '12px',
+    position: 'relative',
+
+    '&:hover': {
+      backgroundColor: '#f5f2f0',
+    },
   },
 }));
 
-const ContentComponent = ({ text }) => <Typography>{text}</Typography>;
+const ContentComponent = ({ text }) => (
+  <Typography style={{ padding: 5.5, wordWrap: 'word-break' }}>
+    {text}
+  </Typography>
+);
 
 const Task = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
+  const [buttonVis, setButtonVis] = useState(false);
 
   return (
     <Draggable draggableId={props.task.id} index={props.index} type="task">
@@ -31,26 +40,40 @@ const Task = (props) => {
           variant="outlined"
           square
           className={classes.task}
+          onMouseEnter={() => setButtonVis(true)}
+          onMouseLeave={() => setButtonVis(false)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
         >
+          {/* Task */}
           <Editable
             text={props.task.content}
             onSubmit={(text) => props.updateContent(props.task.id, text)}
+            onExitIfEmpty={() => {
+              if (props.task.isNew) props.delTask(props.colId, props.task.id);
+            }}
+            initIsEditing={props.task.isNew}
             ContentComponent={() => (
               <ContentComponent text={props.task.content} />
             )}
             multiline
-            // initialIsEditing={props.isNew}
+            styleProps={{
+              padding: '2.5px',
+              fontSize: '1rem',
+              fontWeight: '400',
+              lineHeight: '1.5',
+            }}
           />
-
-          <DelTask
-            delTask={props.delTask}
-            colId={props.colId}
-            taskId={props.task.id}
-          />
+          {/* DelTask Button */}
+          {buttonVis && !snapshot.isDragging && (
+            <DelTask
+              delTask={props.delTask}
+              colId={props.colId}
+              taskId={props.task.id}
+              zIndex="top"
+            />
+          )}
         </Paper>
       )}
     </Draggable>

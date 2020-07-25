@@ -6,27 +6,36 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
   editWrapper: {
     display: 'flex',
-    alignItems: 'center',
-    minHeight: 30,
-    paddingRight: 20,
+    minHeight: '30px',
+    width: '230px',
+    wordWrap: 'break-word',
   },
   inputStyle: {
-    font: 'inherit',
-    padding: 2,
-    margin: 0,
+    // padding: '2.5px',
+    // padding: '8px',
+    // padding: '12px',
+    padding: (styleProps) => styleProps.padding,
+    fontSize: (styleProps) => styleProps.fontSize,
+    fontWeight: (styleProps) => styleProps.fontWeight,
+    lineHeight: (styleProps) => styleProps.lineHeight,
+    // lineHeight: 1.55,
+    margin: '0px',
+    wordWrap: 'break-word',
   },
 }));
 
 const Editable = ({
   text,
   onSubmit,
+  onExitIfEmpty,
   ContentComponent,
+  initIsEditing,
   multiline = false,
-  initialIsEditing = false,
+  styleProps,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(styleProps);
 
-  const [isEditing, setEditing] = useState(initialIsEditing);
+  const [isEditing, setEditing] = useState(initIsEditing);
 
   return (
     <div
@@ -52,10 +61,13 @@ const Editable = ({
               }
             }
           }}
-          onBlur={() => setEditing(false)}
           autoFocus
           onFocus={(e) => {
             e.target.select();
+          }}
+          onBlur={(e) => {
+            setEditing(false);
+            onExitIfEmpty && onExitIfEmpty();
           }}
           InputProps={{
             classes: {

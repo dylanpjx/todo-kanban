@@ -7,9 +7,8 @@ import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   addCol: {
-    width: '270px',
+    minWidth: '270px',
     margin: '0px 15px',
-    padding: '10px 0px',
   },
 }));
 
@@ -20,9 +19,13 @@ const AddCol = (props) => {
     <div className={classes.addCol}>
       <Button
         fullWidth
+        color="primary"
         variant="contained"
         startIcon={<AddIcon />}
-        onClick={() => props.addCol('Type your new column label here')}
+        onClick={() => props.addCol('')}
+        style={{
+          backgroundColor: '#494949',
+        }}
       >
         Add another column
       </Button>

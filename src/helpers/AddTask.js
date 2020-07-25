@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   addTask: {
     border: '',
     padding: '',
-    justifySelf: 'flex-end',
+    position: 'relative',
   },
 }));
 
@@ -21,7 +21,7 @@ const AddTask = (props) => {
       className={classes.addTask}
       size="small"
       startIcon={<AddIcon />}
-      onClick={() => props.addTask(props.colId, 'Type your new task here')}
+      onClick={() => props.addTask(props.colId, '')}
     >
       Add another task
     </Button>

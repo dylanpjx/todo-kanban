@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import initialState from './helpers/initialState';
 import Board from './components/Board';
 
-var _taskIndex = 3;
-var _colIndex = 3;
-var _boardIndex = 1;
-
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState;
+    this.state = localStorage.getItem('state')
+      ? JSON.parse(localStorage.getItem('state'))
+      : initialState;
   }
+  componentDidUpdate = () => {
+    console.log('Saved', this.state);
+    localStorage.setItem('state', JSON.stringify(this.state));
+  };
 
   // DnD
   onDragEnd = (result) => {
@@ -38,6 +41,7 @@ class App extends Component {
         ...this.state,
         boards: { ...this.state.boards, [newBoard.id]: newBoard },
       });
+      localStorage.setItem('state', JSON.stringify(this.state));
       return;
     }
 
@@ -56,6 +60,7 @@ class App extends Component {
         ...this.state,
         cols: { ...this.state.cols, [newCol.id]: newCol },
       });
+      localStorage.setItem('state', JSON.stringify(this.state));
       return;
     }
     // Across different columns
@@ -75,10 +80,11 @@ class App extends Component {
         [newEnd.id]: newEnd,
       },
     });
+    return;
   };
 
   // Board handling
-  addBoard = (header, colIds = [], id = 'board-' + _boardIndex++) => {
+  addBoard = (header, colIds = [], id = 'board-' + uuidv4()) => {
     const boards = { ...this.state.boards };
     boards[id] = { id, header, colIds };
     this.setState({ boards });
@@ -97,9 +103,9 @@ class App extends Component {
   };
 
   // Col handling
-  addCol = (label, taskIds = [], id = 'col-' + _colIndex++) => {
+  addCol = (label, taskIds = [], isNew = true, id = 'col-' + uuidv4()) => {
     const cols = { ...this.state.cols };
-    cols[id] = { id, label, taskIds };
+    cols[id] = { id, label, isNew, taskIds };
     this.setState({ cols });
 
     const boards = { ...this.state.boards };
@@ -116,16 +122,23 @@ class App extends Component {
     boards[this.state.boardOrder[0]].colIds.filter((colId) => colId === id);
   };
 
+  // copyCol = (id) => {
+  //   const cols = { ...this.state.cols };
+  //   const col = cols[id];
+  //   console.log(col, col.label, col.taskIds);
+  //   this.addCol(col.label, col.taskIds);
+  // };
+
   updateLabel = (id, label) => {
     const cols = { ...this.state.cols };
-    cols[id] = { ...cols[id], label };
+    cols[id] = { ...cols[id], label, isNew: false };
     this.setState({ cols });
   };
 
   // Task handling
-  addTask = (colId, content, id = 'task-' + _taskIndex++) => {
+  addTask = (colId, content, isNew = true, id = 'task-' + uuidv4()) => {
     const tasks = { ...this.state.tasks };
-    tasks[id] = { id, content };
+    tasks[id] = { id, content, isNew };
     this.setState({ tasks });
 
     const cols = { ...this.state.cols };
@@ -145,24 +158,24 @@ class App extends Component {
 
   updateContent = (id, content) => {
     const tasks = { ...this.state.tasks };
-    tasks[id] = { ...tasks[id], content };
+    tasks[id] = { ...tasks[id], content, isNew: false };
     this.setState({ tasks });
   };
 
   render() {
     const board = this.state.boards[this.state.boardOrder[0]];
-    console.log('board: ', board);
 
     return (
       <Board
+        boards={this.state.boards}
         board={board}
         updateHeader={this.updateHeader}
         // addBoard={this.addBoard}
         // delBoard={this.delBoard}
-
         cols={this.state.cols}
         addCol={this.addCol}
         delCol={this.delCol}
+        // copyCol={this.copyCol}
         updateLabel={this.updateLabel}
         tasks={this.state.tasks}
         addTask={this.addTask}

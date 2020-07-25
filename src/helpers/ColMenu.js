@@ -26,11 +26,9 @@ const ColMenu = (props) => {
         open={Boolean(menu)}
         onClose={() => setMenu(null)}
       >
-        <MenuItem onClick={() => setMenu(null)}>Copy Column</MenuItem>
         <MenuItem onClick={() => props.delCol(props.colId)}>
           Delete Column
         </MenuItem>
-        <MenuItem onClick={() => setMenu(null)}>Move Column</MenuItem>
       </Menu>
     </div>
   );
