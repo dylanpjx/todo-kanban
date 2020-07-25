@@ -10,16 +10,14 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     height: '70px',
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     padding: '15px',
   },
 }));
 
 const ContentComponent = ({ text }) => (
-  <Typography variant="h5" style={{ justifyContent: 'center' }}>
-    {text}
-  </Typography>
+  <Typography variant="h5">{text}</Typography>
 );
 
 const Header = (props) => {
@@ -30,13 +28,13 @@ const Header = (props) => {
       <Editable
         text={props.header}
         onSubmit={(text) => props.updateHeader(props.boardId, text)}
-        onExitIfEmpty={null}
         ContentComponent={() => <ContentComponent text={props.header} />}
         styleProps={{
           padding: '2.5px',
           fontSize: '1.5rem',
           fontWeight: '400',
           lineHeight: '1.334',
+          width: '180px',
         }}
       />
       <BoardMenu boards={props.boards} />

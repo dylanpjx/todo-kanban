@@ -57,21 +57,23 @@ const Task = (props) => {
             ContentComponent={() => (
               <ContentComponent text={props.task.content} />
             )}
+            setButtonVis={setButtonVis}
             multiline
             styleProps={{
               padding: '2.5px',
               fontSize: '1rem',
               fontWeight: '400',
               lineHeight: '1.5',
+              width: '246px',
             }}
           />
+
           {/* DelTask Button */}
           {buttonVis && !snapshot.isDragging && (
             <DelTask
               delTask={props.delTask}
               colId={props.colId}
               taskId={props.task.id}
-              zIndex="top"
             />
           )}
         </Paper>
