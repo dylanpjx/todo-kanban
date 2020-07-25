@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/todo-kanban/static/css/main.b06c9a26.chunk.css",
+    "main.js": "/todo-kanban/static/js/main.3b695be6.chunk.js",
+    "main.js.map": "/todo-kanban/static/js/main.3b695be6.chunk.js.map",
+    "runtime-main.js": "/todo-kanban/static/js/runtime-main.6c970b09.js",
+    "runtime-main.js.map": "/todo-kanban/static/js/runtime-main.6c970b09.js.map",
+    "static/js/2.54509c3d.chunk.js": "/todo-kanban/static/js/2.54509c3d.chunk.js",
+    "static/js/2.54509c3d.chunk.js.map": "/todo-kanban/static/js/2.54509c3d.chunk.js.map",
+    "index.html": "/todo-kanban/index.html",
+    "precache-manifest.f08e3ba4efb28f83880f655583808d7a.js": "/todo-kanban/precache-manifest.f08e3ba4efb28f83880f655583808d7a.js",
+    "service-worker.js": "/todo-kanban/service-worker.js",
+    "static/css/main.b06c9a26.chunk.css.map": "/todo-kanban/static/css/main.b06c9a26.chunk.css.map",
+    "static/js/2.54509c3d.chunk.js.LICENSE.txt": "/todo-kanban/static/js/2.54509c3d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6c970b09.js",
+    "static/js/2.54509c3d.chunk.js",
+    "static/css/main.b06c9a26.chunk.css",
+    "static/js/main.3b695be6.chunk.js"
+  ]
+}
