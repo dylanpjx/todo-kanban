@@ -7,12 +7,12 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 App.js
+badd +123 App.js
 badd +1 components/Board.js
 badd +71 components/Col.js
 badd +35 components/Task.js
 badd +28 helpers/initialState.js
-badd +38 components/Header.js
+badd +7 components/Header.js
 badd +26 helpers/ColMenu.js
 badd +2 ~/projects/beautiful-dnd-tutorial/src/initialState.js
 badd +18 ~/projects/beautiful-dnd-tutorial/src/App.js
@@ -31,7 +31,7 @@ badd +56 ~/.config/nvim/plugins.vim
 badd +1 \'
 badd +3 index.css
 badd +23 ~/projects/todo-kanban/.gitignore
-badd +10 helpers/BoardMenu.js
+badd +13 helpers/BoardMenu.js
 argglobal
 %argdel
 $argadd App.js
@@ -99,18 +99,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 60 - ((28 * winheight(0) + 19) / 39)
+let s:l = 61 - ((29 * winheight(0) + 19) / 39)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-60
-normal! 038|
+61
+normal! 021|
 wincmd w
-3wincmd w
 exe 'vert 1resize ' . ((&columns * 62 + 94) / 188)
 exe 'vert 2resize ' . ((&columns * 62 + 94) / 188)
 exe 'vert 3resize ' . ((&columns * 62 + 94) / 188)
-tabedit components/Header.js
+tabedit helpers/BoardMenu.js
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -137,12 +136,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 31 - ((24 * winheight(0) + 19) / 39)
+let s:l = 30 - ((29 * winheight(0) + 19) / 39)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
-normal! 09|
+30
+normal! 021|
 wincmd w
 argglobal
 if bufexists("helpers/Editable.js") | buffer helpers/Editable.js | else | edit helpers/Editable.js | endif
@@ -206,12 +205,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 161 - ((17 * winheight(0) + 19) / 39)
+let s:l = 117 - ((12 * winheight(0) + 19) / 39)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-161
-normal! 0
+117
+normal! 028|
 wincmd w
 argglobal
 if bufexists("helpers/initialState.js") | buffer helpers/initialState.js | else | edit helpers/initialState.js | endif
@@ -233,7 +232,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 94 + 94) / 188)
 exe 'vert 2resize ' . ((&columns * 93 + 94) / 188)
-tabnext 1
+tabnext 3
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

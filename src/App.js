@@ -120,6 +120,7 @@ class App extends Component {
 
     const boards = { ...this.state.boards };
     boards[this.state.boardOrder[0]].colIds.filter((colId) => colId === id);
+    this.setState({ boards });
   };
 
   // copyCol = (id) => {
