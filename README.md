@@ -6,11 +6,11 @@ Web app built with React as frontend. Only tested on Windows Firefox currently.
 
 The main goal of this project is to create a component based single page React app. The project is also a platform to learn about web storage.
 
-### The site is hosted [here](https://dylanpjx.github.io/todo-kanban/) for testing.
+The site is hosted [here](https://dylanpjx.github.io/todo-kanban/) for testing.
 
 ### OR
 
-### Host it yourself using `npm install` and `npm run build`
+Host it yourself using `npm install` and `npm run build`
 
 ## Features completed:
 - Single board functionality with custom styles (Material UI)
