@@ -8,7 +8,7 @@ The main goal of this project is to create a component based single page React a
 
 ## How to build and access
 - `npm install` -> `npm run build`
-- [Access it here](https://github.com/dylanpjx/todo-kanban)
+- [Access it here](https://dylanpjx.github.io/todo-kanban/)
 
 ## Features completed:
 - Single board functionality with custom styles (Material UI)
