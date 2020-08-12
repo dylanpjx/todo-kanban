@@ -1,14 +1,17 @@
 # todo-kanban (WIP)
 
+---
+
 ## Personal implementation of a todo kanban board.
 
 Web app built with React as frontend. Only tested on Windows Firefox currently.
 
 The main goal of this project is to create a component based single page React app. The project is also a platform to learn about web storage.
 
-## Viewing instructions
-1. `npm install` and `npm run build`
-2. [Github link](https://github.com/dylanpjx/todo-kanban)
+## How to build and access
+`npm install` and `npm run build`
+ ### OR
+[Access it here](https://github.com/dylanpjx/todo-kanban)
 
 ## Features completed:
 - Single board functionality with custom styles (Material UI)
