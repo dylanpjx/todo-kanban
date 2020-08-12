@@ -1,7 +1,5 @@
 # todo-kanban (WIP)
 
----
-
 ## Personal implementation of a todo kanban board.
 
 Web app built with React as frontend. Only tested on Windows Firefox currently.
