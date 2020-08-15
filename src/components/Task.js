@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgb(255, 253, 246)',
     display: 'flex',
     justifyContent: 'space-between',
-    // padding: '12px',
     position: 'relative',
 
     '&:hover': {
@@ -57,17 +56,14 @@ const Task = (props) => {
             ContentComponent={() => (
               <ContentComponent text={props.task.content} />
             )}
-            setButtonVis={setButtonVis}
             multiline
             styleProps={{
               padding: '2.5px',
               fontSize: '1rem',
               fontWeight: '400',
               lineHeight: '1.5',
-              width: '246px',
             }}
           />
-
           {/* DelTask Button */}
           {buttonVis && !snapshot.isDragging && (
             <DelTask

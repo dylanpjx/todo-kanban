@@ -19,18 +19,16 @@ const DelTask = (props) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <IconButton
-        size="small"
-        className={classes.delTask}
-        style={{
-          borderRadius: '0px',
-        }}
-        onClick={() => props.delTask(props.colId, props.taskId)}
-      >
-        <DeleteIcon />
-      </IconButton>
-    </div>
+    <IconButton
+      size="small"
+      className={classes.delTask}
+      style={{
+        borderRadius: '0px',
+      }}
+      onClick={() => props.delTask(props.colId, props.taskId)}
+    >
+      <DeleteIcon />
+    </IconButton>
   );
 };
 

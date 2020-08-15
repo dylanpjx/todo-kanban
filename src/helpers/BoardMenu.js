@@ -7,7 +7,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
-  boardMenu: {},
+  // boardMenu: { padding: '0px' },
 }));
 
 const BoardMenu = (props) => {
@@ -15,8 +15,11 @@ const BoardMenu = (props) => {
   const [menu, setMenu] = useState(null);
 
   return (
-    <div className={classes.boardMenu}>
-      <IconButton onClick={(e) => setMenu(e.currentTarget)}>
+    <div>
+      <IconButton
+        className={classes.boardMenu}
+        onClick={(e) => setMenu(e.currentTarget)}
+      >
         <MoreHorizIcon />
       </IconButton>
       <Menu

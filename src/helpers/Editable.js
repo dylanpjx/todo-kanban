@@ -7,9 +7,9 @@ const useStyles = makeStyles((theme) => ({
   editWrapper: {
     display: 'flex',
     minHeight: '30px',
-    // width: '230px',
-    width: (styleProps) => (styleProps.width ? styleProps.width : '230px'),
+    width: '230px',
     wordWrap: 'break-word',
+    flex: 1,
   },
   inputStyle: {
     padding: (styleProps) => styleProps.padding,
@@ -24,17 +24,15 @@ const useStyles = makeStyles((theme) => ({
 const Editable = ({
   text,
   onSubmit,
+  onExitIfEmpty,
   ContentComponent,
   initIsEditing,
-  styleProps,
-  onExitIfEmpty = null,
-  setButtonVis = null,
   multiline = false,
+  styleProps,
 }) => {
   const classes = useStyles(styleProps);
 
   const [isEditing, setEditing] = useState(initIsEditing);
-  if (isEditing && setButtonVis) setButtonVis(false);
 
   return (
     <div

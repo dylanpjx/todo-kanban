@@ -14,10 +14,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     padding: '15px',
   },
+  headerWrapper: {
+    display: 'flex',
+    width: '30%',
+    maxWidth: 500,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 const ContentComponent = ({ text }) => (
-  <Typography variant="h5">{text}</Typography>
+  <Typography variant="h5" style={{ justifyContent: 'center' }}>
+    {text}
+  </Typography>
 );
 
 const Header = (props) => {
@@ -25,19 +34,21 @@ const Header = (props) => {
 
   return (
     <header className={classes.header}>
-      <Editable
-        text={props.header}
-        onSubmit={(text) => props.updateHeader(props.boardId, text)}
-        ContentComponent={() => <ContentComponent text={props.header} />}
-        styleProps={{
-          padding: '2.5px',
-          fontSize: '1.5rem',
-          fontWeight: '400',
-          lineHeight: '1.334',
-          width: '180px',
-        }}
-      />
-      <BoardMenu boards={props.boards} />
+      <div className={classes.headerWrapper}>
+        <Editable
+          text={props.header}
+          onSubmit={(text) => props.updateHeader(props.boardId, text)}
+          onExitIfEmpty={null}
+          ContentComponent={() => <ContentComponent text={props.header} />}
+          styleProps={{
+            padding: '2.5px',
+            fontSize: '1.5rem',
+            fontWeight: '400',
+            lineHeight: '1.334',
+          }}
+        />
+        <BoardMenu boards={props.boards} />
+      </div>
     </header>
   );
 };

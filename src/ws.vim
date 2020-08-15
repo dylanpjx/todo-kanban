@@ -7,22 +7,22 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 App.js
-badd +19 components/Board.js
+badd +143 App.js
+badd +1 components/Board.js
 badd +71 components/Col.js
-badd +35 components/Task.js
-badd +28 helpers/initialState.js
-badd +7 components/Header.js
-badd +26 helpers/ColMenu.js
+badd +65 components/Task.js
+badd +43 helpers/initialState.js
+badd +21 components/Header.js
+badd +17 helpers/ColMenu.js
 badd +2 ~/projects/beautiful-dnd-tutorial/src/initialState.js
 badd +18 ~/projects/beautiful-dnd-tutorial/src/App.js
-badd +37 helpers/Editable.js
+badd +1 helpers/Editable.js
 badd +11 helpers/AddTask.js
 badd +22 helpers/AddCol.js
-badd +27 helpers/DelTask.js
+badd +14 helpers/DelTask.js
 badd +3 components/Frontpage.js
-badd +4 ~/.config/nvim/init.vim
-badd +39 ~/.config/nvim/settings.vim
+badd +6 ~/.config/nvim/init.vim
+badd +27 ~/.config/nvim/settings.vim
 badd +23 ~/.config/nvim/mappings.vim
 badd +9 index.js
 badd +1 helpers/NavBar.js
@@ -31,12 +31,13 @@ badd +56 ~/.config/nvim/plugins.vim
 badd +1 \'
 badd +3 index.css
 badd +23 ~/projects/todo-kanban/.gitignore
-badd +29 helpers/BoardMenu.js
+badd +26 helpers/BoardMenu.js
+badd +1 test.txt
 argglobal
 %argdel
 $argadd App.js
 set stal=2
-edit helpers/ColMenu.js
+edit components/Board.js
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -50,9 +51,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 3resize ' . ((&columns * 62 + 94) / 188)
+exe 'vert 1resize ' . ((&columns * 34 + 51) / 102)
+exe 'vert 2resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 3resize ' . ((&columns * 33 + 51) / 102)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -63,12 +64,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 29 - ((28 * winheight(0) + 19) / 39)
+let s:l = 41 - ((33 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-29
-normal! 046|
+41
+normal! 034|
 wincmd w
 argglobal
 if bufexists("components/Col.js") | buffer components/Col.js | else | edit components/Col.js | endif
@@ -81,11 +82,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 73 - ((30 * winheight(0) + 19) / 39)
+let s:l = 75 - ((24 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-73
+75
 normal! 017|
 wincmd w
 argglobal
@@ -99,18 +100,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 54 - ((22 * winheight(0) + 19) / 39)
+let s:l = 73 - ((26 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-54
-normal! 078|
+73
+normal! 013|
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 3resize ' . ((&columns * 62 + 94) / 188)
-tabedit helpers/BoardMenu.js
+exe 'vert 1resize ' . ((&columns * 34 + 51) / 102)
+exe 'vert 2resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 3resize ' . ((&columns * 33 + 51) / 102)
+tabedit helpers/Editable.js
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -124,9 +124,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 3resize ' . ((&columns * 62 + 94) / 188)
+exe 'vert 1resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 2resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 3resize ' . ((&columns * 34 + 51) / 102)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -137,15 +137,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 30 - ((29 * winheight(0) + 19) / 39)
+let s:l = 2 - ((1 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-30
-normal! 021|
+2
+normal! 0
 wincmd w
 argglobal
-if bufexists("helpers/Editable.js") | buffer helpers/Editable.js | else | edit helpers/Editable.js | endif
+if bufexists("components/Board.js") | buffer components/Board.js | else | edit components/Board.js | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -155,15 +155,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 37 - ((24 * winheight(0) + 19) / 39)
+let s:l = 16 - ((14 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-37
-normal! 053|
+16
+normal! 04|
 wincmd w
 argglobal
-if bufexists("helpers/BoardMenu.js") | buffer helpers/BoardMenu.js | else | edit helpers/BoardMenu.js | endif
+if bufexists("components/Header.js") | buffer components/Header.js | else | edit components/Header.js | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -173,29 +173,23 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 10 - ((5 * winheight(0) + 19) / 39)
+let s:l = 28 - ((19 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 03|
+28
+normal! 05|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 62 + 94) / 188)
-exe 'vert 3resize ' . ((&columns * 62 + 94) / 188)
+exe 'vert 1resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 2resize ' . ((&columns * 33 + 51) / 102)
+exe 'vert 3resize ' . ((&columns * 34 + 51) / 102)
 tabedit App.js
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 wincmd t
 set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 90 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 97 + 94) / 188)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -206,34 +200,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 110 - ((11 * winheight(0) + 19) / 39)
+let s:l = 124 - ((1 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-110
+124
 normal! 0
-wincmd w
-argglobal
-if bufexists("helpers/initialState.js") | buffer helpers/initialState.js | else | edit helpers/initialState.js | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 15 - ((0 * winheight(0) + 19) / 39)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-15
-normal! 0
-wincmd w
-exe 'vert 1resize ' . ((&columns * 90 + 94) / 188)
-exe 'vert 2resize ' . ((&columns * 97 + 94) / 188)
-tabnext 1
+tabnext 3
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
