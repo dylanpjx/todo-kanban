@@ -2,12 +2,10 @@
 
 ## Personal implementation of a todo kanban board.
 
-Web app built with React as frontend. Only tested on Windows Firefox currently.
-
-The main goal of this project is to create a component based single page React app. The project is also a platform to learn about web storage.
+Simple todo web kanban web app created with React. Notes are stored on localStorage and persist across multiple sessions!
 
 ## How to build and access
-- `npm install` -> `npm run build`
+- `git clone https://github.com/dylanpjx/todo-kanban.git` -> `npm install` -> `npm run build`
 - [Access it here](https://dylanpjx.github.io/todo-kanban/)
 
 ## Features completed:
