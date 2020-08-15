@@ -3,7 +3,6 @@ import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -15,8 +14,8 @@ import AddTask from '../helpers/AddTask';
 
 const useStyles = makeStyles((theme) => ({
   col: {
-    backgroundColor: 'rgb(243.6, 241.2, 232.2)',
     display: 'flex',
+    backgroundColor: 'rgb(243.6, 241.2, 232.2)',
     flexDirection: 'column',
     minWidth: '270px',
     margin: '0px 15px',
@@ -35,12 +34,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
 }));
-
-const ContentComponent = ({ text }) => (
-  <Typography style={{ padding: '12px' }} variant="h6">
-    {text}
-  </Typography>
-);
 
 const Col = (props) => {
   const classes = useStyles();
@@ -63,15 +56,12 @@ const Col = (props) => {
                   if (props.col.isNew) props.delCol(props.col.id);
                 }}
                 initIsEditing={props.col.isNew}
-                // inputStyle={classes.inputStyle}
-                ContentComponent={() => (
-                  <ContentComponent text={props.col.label} />
-                )}
                 styleProps={{
                   padding: '10px',
                   fontSize: '1.25rem',
                   fontWeight: '500',
                   lineHeight: '1.6',
+                  width: '230px',
                 }}
               />
 

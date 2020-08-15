@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 
+import ReactMarkdown from 'react-markdown';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
+  // Fixed width for Task and Label but not Header
   editWrapper: {
     display: 'flex',
     minHeight: '30px',
-    width: '230px',
+    width: (styleProps) => styleProps.width,
+    // minWidth: '50px',
     wordWrap: 'break-word',
-    flex: 1,
+    flex: '1 1 auto',
   },
+  // Change the inputStyles according to typography type
   inputStyle: {
     padding: (styleProps) => styleProps.padding,
+    fontFamily: 'Arial',
     fontSize: (styleProps) => styleProps.fontSize,
     fontWeight: (styleProps) => styleProps.fontWeight,
     lineHeight: (styleProps) => styleProps.lineHeight,
-    margin: '0px',
     wordWrap: 'break-word',
   },
 }));
@@ -25,7 +29,6 @@ const Editable = ({
   text,
   onSubmit,
   onExitIfEmpty,
-  ContentComponent,
   initIsEditing,
   multiline = false,
   styleProps,
@@ -74,7 +77,9 @@ const Editable = ({
           }}
         />
       ) : (
-        <ContentComponent />
+        <div className={classes.inputStyle}>
+          <ReactMarkdown source={text} />
+        </div>
       )}
     </div>
   );

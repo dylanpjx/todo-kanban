@@ -40,7 +40,8 @@ const initialState = {
     },
     'task-2': {
       id: 'task-2',
-      content: 'The notes support markdown syntax',
+      content:
+        'Markdown support is here\n **Bold**, _italics_ and [inline links](https://github.com/dylanpjx)!',
       isNew: false,
     },
   },

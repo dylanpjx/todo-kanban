@@ -19,7 +19,7 @@ const AddTask = (props) => {
   return (
     <Button
       className={classes.addTask}
-      size="small"
+      fullWidth
       startIcon={<AddIcon />}
       onClick={() => props.addTask(props.colId, '')}
     >
