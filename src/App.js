@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import initialState from './helpers/initialState';
+import NavBar from './components/NavBar';
 import Board from './components/Board';
 
 class App extends Component {
@@ -167,23 +168,26 @@ class App extends Component {
     const board = this.state.boards[this.state.boardOrder[0]];
 
     return (
-      <Board
-        boards={this.state.boards}
-        board={board}
-        updateHeader={this.updateHeader}
-        // addBoard={this.addBoard}
-        // delBoard={this.delBoard}
-        cols={this.state.cols}
-        addCol={this.addCol}
-        delCol={this.delCol}
-        // copyCol={this.copyCol}
-        updateLabel={this.updateLabel}
-        tasks={this.state.tasks}
-        addTask={this.addTask}
-        delTask={this.delTask}
-        updateContent={this.updateContent}
-        onDragEnd={this.onDragEnd}
-      />
+      <div>
+        <NavBar boards={this.state.boards} boardOrder={this.state.boardOrder} />
+        <Board
+          boards={this.state.boards}
+          board={board}
+          updateHeader={this.updateHeader}
+          // addBoard={this.addBoard}
+          // delBoard={this.delBoard}
+          cols={this.state.cols}
+          addCol={this.addCol}
+          delCol={this.delCol}
+          // copyCol={this.copyCol}
+          updateLabel={this.updateLabel}
+          tasks={this.state.tasks}
+          addTask={this.addTask}
+          delTask={this.delTask}
+          updateContent={this.updateContent}
+          onDragEnd={this.onDragEnd}
+        />
+      </div>
     );
   }
 }

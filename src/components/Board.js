@@ -8,7 +8,9 @@ import Header from './Header';
 import Col from './Col';
 
 const useStyles = makeStyles((theme) => ({
-  board: {},
+  board: {
+    marginTop: '70px',
+  },
   colWrapper: {
     display: 'flex',
     margin: '0px 20px',

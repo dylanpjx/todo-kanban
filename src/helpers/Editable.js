@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '30px',
     width: (styleProps) => styleProps.width,
-    // minWidth: '50px',
     wordWrap: 'break-word',
     flex: '1 1 auto',
   },
