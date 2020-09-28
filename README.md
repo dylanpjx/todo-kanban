@@ -19,6 +19,7 @@ Simple todo web kanban web app created with React. Notes are stored on localStor
 - ~~Add react-beautiful-dnd for dragging animations~~
 - ~~Support markdown syntax~~
 - Multi board support with simple navbar
+- Adding nested todos
 - User authentication
 - Use MongoDB to permanently store notes per user (Basic version will use localStorage)
 - Multiple board per user with different formats (Paint-like canvas, Kanban, Normal notes)
