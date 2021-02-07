@@ -31,7 +31,7 @@ const BoardMenu = (props) => {
       >
         <MenuItem
           disabled={Object.keys(props.boards).length <= 1}
-          onClick={() => setMenu(null)}
+          onClick={() => props.delBoard}
         >
           Delete Board
         </MenuItem>

@@ -37,7 +37,7 @@ const Header = (props) => {
             lineHeight: '1.334',
           }}
         />
-        <BoardMenu boards={props.boards} />
+        <BoardMenu boards={props.boards} delBoard={props.delBoard} />
       </div>
     </header>
   );

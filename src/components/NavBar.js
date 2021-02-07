@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -16,105 +15,102 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
+const listWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
+  toolbar: {
     backgroundColor: '#494949',
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    // postition: '',
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
+
   button: {
     color: 'rgb(255, 255, 255)',
     margin: theme.spacing(1),
   },
-  drawer: {
+  list: {
     backgroundColor: 'rgb(255, 253, 246)',
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    backgroundColor: 'rgb(255, 253, 246)',
-    width: drawerWidth,
+    width: listWidth,
     flexShrink: 0,
   },
 }));
 
 const NavBar = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <AppBar
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        position="fixed"
-      >
-        <Toolbar>
-          <Button
-            className={classes.button}
-            edge="start"
-            onClick={handleDrawerOpen}
-          >
-            View boards
-          </Button>
-          <Button
-            className={classes.button}
-            onClick={() => {
-              localStorage.clear();
-              window.location.reload();
-              return false;
-            }}
-          >
-            Reset boards
-          </Button>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        className="drawer"
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-        <Divider />
+  const list = (anchor) => (
+    <div
+      className={clsx(classes.list)}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
         {props.boardOrder.map((board, index) => {
           return (
             <ListItem key={index} button>
-              <ListItemText inset primary={props.boards[board].header} />
+              <ListItemText primary={props.boards[board].header} />
             </ListItem>
           );
         })}
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            props.addBoard('New board');
+          }}
+        >
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
           <ListItemText primary="Add board" />
         </ListItem>
+      </List>
+    </div>
+  );
+
+  return (
+    <div>
+      <Toolbar className={classes.toolbar}>
+        <Button
+          className={classes.button}
+          edge="start"
+          onClick={toggleDrawer('left', true)}
+        >
+          View boards
+        </Button>
+        <Button
+          className={classes.button}
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+            return false;
+          }}
+        >
+          Reset boards
+        </Button>
+      </Toolbar>
+      <Drawer
+        anchor={'left'}
+        open={state['left']}
+        onClose={toggleDrawer('left', false)}
+      >
+        {list('left')}
       </Drawer>
     </div>
   );

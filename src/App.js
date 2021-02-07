@@ -38,10 +38,10 @@ class App extends Component {
       colIds.splice(destination.index, 0, draggableId);
       const newBoard = { ...this.state.boards[source.draggableId], colIds };
 
-      this.setState({
-        ...this.state,
-        boards: { ...this.state.boards, [newBoard.id]: newBoard },
-      });
+      this.setState((prev) => ({
+        ...prev,
+        boards: { ...prev.boards, [newBoard.id]: newBoard },
+      }));
       localStorage.setItem('state', JSON.stringify(this.state));
       return;
     }
@@ -57,10 +57,10 @@ class App extends Component {
       taskIds.splice(destination.index, 0, draggableId);
       const newCol = { ...startCol, taskIds };
 
-      this.setState({
-        ...this.state,
-        cols: { ...this.state.cols, [newCol.id]: newCol },
-      });
+      this.setState((prev) => ({
+        ...prev,
+        cols: { ...prev.cols, [newCol.id]: newCol },
+      }));
       localStorage.setItem('state', JSON.stringify(this.state));
       return;
     }
@@ -73,28 +73,36 @@ class App extends Component {
     endTaskIds.splice(destination.index, 0, draggableId);
     const newEnd = { ...endCol, endTaskIds };
 
-    this.setState({
-      ...this.state,
+    this.setState((prev) => ({
+      ...prev,
       cols: {
-        ...this.state.cols,
+        ...prev.cols,
         [newStart.id]: newStart,
         [newEnd.id]: newEnd,
       },
-    });
+    }));
     return;
   };
 
   // Board handling
   addBoard = (header, colIds = [], id = 'board-' + uuidv4()) => {
-    const boards = { ...this.state.boards };
-    boards[id] = { id, header, colIds };
-    this.setState({ boards });
+    this.setState((prev) => ({
+      ...prev,
+      boards: {
+        ...prev.boards,
+        [id]: { id, header, colIds },
+      },
+      boardOrder: prev.boardOrder.concat(id),
+    }));
   };
 
   delBoard = (id) => {
-    const boards = { ...this.state.boards };
-    boards.filter((board) => board.id === id);
-    this.setState({ boards });
+    this.setState((prev) => ({
+      ...prev,
+      boards: {
+        ...prev.boards.filter((board) => board.id === id),
+      },
+    }));
   };
 
   updateHeader = (id, header) => {
@@ -169,12 +177,15 @@ class App extends Component {
 
     return (
       <div>
-        <NavBar boards={this.state.boards} boardOrder={this.state.boardOrder} />
+        <NavBar
+          boards={this.state.boards}
+          boardOrder={this.state.boardOrder}
+          addBoard={this.addBoard}
+        />
         <Board
           boards={this.state.boards}
           board={board}
           updateHeader={this.updateHeader}
-          // addBoard={this.addBoard}
           // delBoard={this.delBoard}
           cols={this.state.cols}
           addCol={this.addCol}

@@ -29,6 +29,7 @@ const Board = (props) => {
           boardId={props.board.id}
           header={props.board.header}
           updateHeader={props.updateHeader}
+          delBoard={props.delBoard}
         />
 
         {/* Columns */}
